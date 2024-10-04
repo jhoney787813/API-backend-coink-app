@@ -19,3 +19,4 @@ Para cumplir con este requisito, hemos optado por utilizar [Supabase](https://su
 Supabase proporciona funcionalidades clave para nuestro proyecto "API-backend-coink-app", tales como la implementación de una base de datos PostgreSQL, autenticación, generación automática de APIs, funciones Edge, suscripciones en tiempo real, almacenamiento y capacidades de incrustación vectorial.
 
 
+[Jhon E -> GitHub Profile](https://github.com/jhoney787813/)
