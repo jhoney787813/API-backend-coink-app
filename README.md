@@ -1,5 +1,5 @@
 # API-backend-coink-app
-El propósito del repositorio es evidenciar los conocimientos como especialista Backend en la construcción de API REST con .NET C#, SQL para la compañía - Coink S.A.
+Este repositorio tiene como objetivo evidenciar mis conocimientos como especialista Backend en la construcción de API REST, utilizando tecnologías como .NET, C# y SQL. El desarrollo sigue el patrón de diseño CQRS junto con MediatR, como parte de la implementación de una solución de software para la compañía Coink S.A., catalogada dentro de una arquitectura limpia (Clean Architecture) y orientada a microservicios.
 
 ## distribución del repositorio
 
