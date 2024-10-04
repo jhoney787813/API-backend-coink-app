@@ -13,7 +13,9 @@ En esta sección encontrarás todos los scripts necesarios, tanto de DDL (Data D
 
 En esta sección encontrarás la distribución tanto lógica como física de la solución de software, abarcando su arquitectura y la creación del proyecto en .NET. El desarrollo se ha realizado utilizando Visual Studio como entorno de desarrollo (IDE).  [-> Ver Código](https://github.com/jhoney787813/API-backend-coink-app/blob/main/Contenido-Desarrollo.md)
 
-#### Nota: Como un requisito se pide utilizar PostgreSQL como motor de base de datos, por lo que para cumplir este se utiliza un servicio en la nube llamado SupaBase (https://supabase.com/).
+#### Nota: Como parte de los requisitos, se ha solicitado utilizar PostgreSQL como motor de base de datos. 
+Para cumplir con este requisito, hemos optado por utilizar [Supabase](https://supabase.com/), un servicio en la nube que ofrece una alternativa de código abierto a Firebase.
 
-El cual nos ofrece una alternativa de código abierto a Firebase. Dando comienzoa nuestro proyecto "API-backend-coink-app" con la implementación de base de datos Postgres, autenticación, API instantáneas, funciones Edge, suscripciones en tiempo real, almacenamiento e incrustaciones vectoriales. 
+Supabase proporciona funcionalidades clave para nuestro proyecto "API-backend-coink-app", tales como la implementación de una base de datos PostgreSQL, autenticación, generación automática de APIs, funciones Edge, suscripciones en tiempo real, almacenamiento y capacidades de incrustación vectorial.
+
 
