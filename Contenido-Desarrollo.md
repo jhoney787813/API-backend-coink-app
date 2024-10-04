@@ -23,7 +23,7 @@ Además, es crucial definir si nuestra API o backend adoptará una estrategia de
 
 Para profundizar en estos conceptos, incluyo un recurso que elaboré en mi compañía actual, donde exploro en detalle la tecnología .NET y enfatizo la importancia de CQRS.
 
-voy a dejar un recurso elaborado por mi donde incursiono en tecnologia .NET y enfatizo en la importancia de CQRS
+Voy a dejar un recurso elaborado por mí, donde exploro la tecnología .NET y enfatizo la importancia de CQRS. También discuto los retos que conlleva su implementación, ya que toda arquitectura tiene sus ventajas y desventajas.
 
 ![recurso1](https://github.com/user-attachments/assets/8c7e5887-4f17-458c-a20a-0e9d2ee220b0)
 
