@@ -11,11 +11,9 @@ válido.
 
 
 
-**Justificación para la elección de la arquitectura:**
+### Justificación para la elección de la arquitectura:
 
 La solución de software se desarrolló implementando el patrón CQRS junto con la arquitectura Vertical Slice, con el objetivo de garantizar atributos de negocio como la escalabilidad y la seguridad.
-
-### Justificación de la elección:
 
 **Vertical Slice Architecture** es una técnica que permite crear aplicaciones mantenibles al organizar la aplicación en torno a características o "cortes verticales". Esto facilita la gestión y el desarrollo, ya que cada corte vertical representa un conjunto específico de funcionalidades.
 
