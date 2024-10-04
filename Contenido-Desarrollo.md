@@ -1,6 +1,6 @@
 # Desarrollo C#
 
-Este proyecto se enfoca en la creación de una API REST utilizando tecnologías como .NET, C# y SQL. El desarrollo sigue el patrón de diseño CQRS junto con MediatR.
+Este proyecto se enfoca en la creación de una API REST utilizando tecnologías como .NET, C# y SQL. El desarrollo sigue el patrón de diseño CQRS junto con MediatR. lo que facilita la implementación de un API con corte vertical.
 
 ### Requerimientos a evaluar:
 * Deberá crear una API de servicios que exponga un servicio para registrar los siguientes datos: Nombre, teléfono, país, departamento, municipio y dirección.
