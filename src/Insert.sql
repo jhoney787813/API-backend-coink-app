@@ -8,9 +8,9 @@ VALUES
 INSERT INTO State (name, prefix, country_id)
 VALUES
 ('California', 'CA', (SELECT id FROM Country WHERE prefix = 'US')),
-('Texas', 'TX', (SELECT id FROM Country WHERE prefix = 'United States')),
+('Texas', 'TX', (SELECT id FROM Country WHERE prefix = 'US')),
 ('Ontario', 'ON', (SELECT id FROM Country WHERE prefix = 'CA')),
-('Quebec', 'QC', (SELECT id FROM Country WHERE prefix = 'Canada')),
+('Quebec', 'QC', (SELECT id FROM Country WHERE prefix = 'CA')),
 ('Nuevo León', 'NL', (SELECT id FROM Country WHERE prefix = 'MX')),
 ('Jalisco', 'JA', (SELECT id FROM Country WHERE prefix = 'MX')),
 ('Bogotá', 'BO', (SELECT id FROM Country WHERE prefix = 'CO')),
@@ -23,7 +23,7 @@ VALUES
 ('San Francisco', 'SF', (SELECT id FROM State WHERE prefix = 'CA')),
 ('Houston', 'HT', (SELECT id FROM State WHERE prefix = 'TX')),
 ('Dallas', 'DL', (SELECT id FROM State WHERE prefix = 'ON')),
-('Toronto', 'TO', (SELECT id FROM State WHERE prefix = 'Ontario')),
+('Toronto', 'TO', (SELECT id FROM State WHERE prefix = 'ON')),
 ('Montreal', 'MT', (SELECT id FROM State WHERE prefix = 'QC')),
 ('Monterrey', 'MTY', (SELECT id FROM State WHERE prefix = 'NL')),
 ('Guadalajara', 'GDL', (SELECT id FROM State WHERE prefix = 'JA')),
@@ -36,7 +36,7 @@ VALUES
 
 
 
-INSERT INTO UserData (city_id,name, phone, address, city_id)
+INSERT INTO UserData (card_id,name, phone, address, city_id)
 VALUES
 ('123','Juan Pérez', '5551234', 'Calle 123, Bogotá',
     (SELECT id FROM City WHERE prefix = 'BOG')
