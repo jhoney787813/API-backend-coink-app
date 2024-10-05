@@ -112,6 +112,15 @@ public interface ICityRepository
     Task<bool> CityExistsAsync(int cityId);
 }
 ```
+**Podrias incluir en la sección del metodo ModelIsValidAsync, una regla que haga referecia a la implementación repositorio  y devolver el mensaje personalizado que concideres.
+
+```csharp
+   // Validación adicional: Verificar si la ciudad existe en la base de datos
+        var cityExists = await _cityRepository.CityExistsAsync(createUserCommand.CityId);
+        if (!cityExists)
+            errors.Append("CityId does not exist.\n");
+```
+
 
 La propuesta busca desarrollar un repositorio que valide la existencia de ciudades en la base de datos, utilizando caché para optimizar el rendimiento. E
 La utilización de `IMemoryCache` mejora significativamente el rendimiento al evitar consultas repetitivas y optimizar la experiencia del usuario al reducir los tiempos de respuesta.
