@@ -65,5 +65,6 @@ La distribución física de paquetes que mencionas en la construcción de APIs s
 
 Este diseño asegura que cada módulo sea independiente, fácil de probar y de modificar. El uso de **CQRS** permite que los comandos y consultas se manejen de manera eficiente, lo que mejora la escalabilidad. Además, el enfoque de **Vertical Slice** garantiza que cada funcionalidad sea tratada como una unidad completa, facilitando el mantenimiento y la evolución del sistema. La aplicación de principios **SOLID** favorece un código más limpio, reutilizable y adaptable.
 
+([Codigo Fuente](https://github.com/jhoney787813/API-backend-coink-app/tree/main/src)) 
 
 
