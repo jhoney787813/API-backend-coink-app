@@ -204,4 +204,107 @@ La función se invoca de la siguiente manera:
 SELECT * FROM fnGetUsersData();
 ```
 
+## Procedimiento con Manejo de Transacciones en PostgreSQL
+
+Este procedimiento `InsertUserData` inserta datos en la tabla `UserData` y utiliza transacciones para asegurar que los cambios se confirmen (**commit**) o se deshagan (**rollback**) en caso de error.
+
+**NOTA:** El Manejo implícito de transacciones: PostgreSQL ya controla las transacciones automáticamente, por lo que no es necesario usar COMMIT o ROLLBACK en el procedimiento.
+
+### Estructura del Procedure
+
+```sql
+CREATE OR REPLACE PROCEDURE spInsertUserData(
+    p_card_id VARCHAR(12),
+    p_name VARCHAR(100),
+    p_phone VARCHAR(15),
+    p_address VARCHAR(255),
+    p_city_id INT
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    BEGIN
+        INSERT INTO UserData(card_id, name, phone, address, city_id, created_at)
+        VALUES (p_card_id, p_name, p_phone, p_address, p_city_id, CURRENT_TIMESTAMP);
+        --COMMIT;
+        RAISE NOTICE 'User with card_id: % inserted successfully.', p_card_id;
+    EXCEPTION
+        WHEN OTHERS THEN
+           --ROLLBACK;
+            RAISE EXCEPTION 'Error inserting user with card_id: %. Transaction rolled back.', p_card_id;
+    END;
+END;
+$$;
+```
+
+# Procedimientos Almacenados para la Tabla UserData
+
+## DeleteUserByCardId - Eliminar Usuario por Número de Cédula
+
+### Descripción:
+Este procedimiento almacenado elimina un usuario de la tabla `UserData` basado en el número de cédula proporcionado (`card_id`).
+
+### Parámetros:
+- `p_card_id`: El número de cédula único del usuario que se desea eliminar (`VARCHAR(12)`).
+
+### SQL:
+```sql
+CREATE OR REPLACE PROCEDURE spDeleteUserByCardId(
+    p_card_id VARCHAR(12)
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    -- Intentar eliminar al usuario
+    BEGIN
+        DELETE FROM UserData
+        WHERE card_id = p_card_id;
+
+        -- Notificación de éxito
+        RAISE NOTICE 'Usuario con card_id: % eliminado correctamente.', p_card_id;
+
+    EXCEPTION
+        -- Manejo de errores
+        WHEN OTHERS THEN
+            RAISE EXCEPTION 'Error al eliminar el usuario con card_id: %', p_card_id;
+    END;
+END;
+$$;
+
+```
+## UpdateUserData - Actualizar Información del Usuario por Número de Cédula
+
+### Descripción:
+El procedimiento almacenado `UpdateUserData` permite actualizar la información de un usuario en la tabla `UserData` utilizando el número de cédula (`card_id`) como clave única. Los datos que se pueden actualizar incluyen el nombre del usuario, el número de teléfono, la dirección y la ciudad donde reside.
+
+### Parámetros:
+- **`p_card_id`** (`VARCHAR(12)`): El número de cédula único del usuario que se desea actualizar.
+- **`p_name`** (`VARCHAR(100)`): El nuevo nombre del usuario.
+- **`p_phone`** (`VARCHAR(15)`): El nuevo número de teléfono del usuario.
+- **`p_address`** (`VARCHAR(255)`): La nueva dirección del usuario.
+- **`p_city_id`** (`INT`): El ID de la ciudad a la que pertenece el usuario, relacionado con la tabla `City`.
+
+### SQL:
+```sql
+CREATE OR REPLACE PROCEDURE spUpdateUserData(
+    p_card_id VARCHAR(12),
+    p_name VARCHAR(100),
+    p_phone VARCHAR(15),
+    p_address VARCHAR(255),
+    p_city_id INT
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    BEGIN
+        UPDATE UserData
+        SET name = p_name,
+            phone = p_phone,
+            address = p_address,
+            city_id = p_city_id,
+        WHERE card_id = p_card_id;
+        RAISE NOTICE 'Usuario con card_id: % actualizado correctamente.', p_card_id;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE EXCEPTION 'Error al actualizar el usuario con card_id: %', p_card_id;
+    END;
+END;
+$$;
 
