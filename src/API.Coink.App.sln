@@ -21,7 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{E9A757
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sp", "Sp", "{8F695559-40E2-4B58-BC88-10A3E3C2CCC3}"
 	ProjectSection(SolutionItems) = preProject
-		Procedures.sql = Procedures.sql
+		fnGetUserDataByCardId.sql = fnGetUserDataByCardId.sql
+		fnGetUsersData.sql = fnGetUsersData.sql
+		spDeleteUserByCardId.sql = spDeleteUserByCardId.sql
+		spInsertUserData.sql = spInsertUserData.sql
+		spUpdateUserData.sql = spUpdateUserData.sql
 	EndProjectSection
 EndProject
 Global
