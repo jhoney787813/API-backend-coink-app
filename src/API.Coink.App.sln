@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API-backend-coink-app", "API\API-backend-coink-app.csproj", "{547AEB4F-FD15-4B38-8D31-AA08DD5A6BF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{B75476AA-8CF6-4A1B-B95D-34716F9DA13A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{1C0E1341-4210-4A52-ACC6-F4A169248349}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{12DBEBA5-C2A0-4093-97FD-A10CD65CE32B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{DEEC9F6F-F245-4F0B-8B7D-983904DE2B2B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{E9A75767-322F-4690-A960-5919AF2CCCEB}"
+	ProjectSection(SolutionItems) = preProject
+		Create.sql = Create.sql
+		Insert.sql = Insert.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sp", "Sp", "{8F695559-40E2-4B58-BC88-10A3E3C2CCC3}"
+	ProjectSection(SolutionItems) = preProject
+		Procedures.sql = Procedures.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{547AEB4F-FD15-4B38-8D31-AA08DD5A6BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{547AEB4F-FD15-4B38-8D31-AA08DD5A6BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{547AEB4F-FD15-4B38-8D31-AA08DD5A6BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{547AEB4F-FD15-4B38-8D31-AA08DD5A6BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B75476AA-8CF6-4A1B-B95D-34716F9DA13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B75476AA-8CF6-4A1B-B95D-34716F9DA13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B75476AA-8CF6-4A1B-B95D-34716F9DA13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B75476AA-8CF6-4A1B-B95D-34716F9DA13A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C0E1341-4210-4A52-ACC6-F4A169248349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C0E1341-4210-4A52-ACC6-F4A169248349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C0E1341-4210-4A52-ACC6-F4A169248349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C0E1341-4210-4A52-ACC6-F4A169248349}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12DBEBA5-C2A0-4093-97FD-A10CD65CE32B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12DBEBA5-C2A0-4093-97FD-A10CD65CE32B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12DBEBA5-C2A0-4093-97FD-A10CD65CE32B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12DBEBA5-C2A0-4093-97FD-A10CD65CE32B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9A75767-322F-4690-A960-5919AF2CCCEB} = {DEEC9F6F-F245-4F0B-8B7D-983904DE2B2B}
+		{8F695559-40E2-4B58-BC88-10A3E3C2CCC3} = {DEEC9F6F-F245-4F0B-8B7D-983904DE2B2B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1720CFE8-F990-44E6-846E-286D26488CDD}
+	EndGlobalSection
+EndGlobal
