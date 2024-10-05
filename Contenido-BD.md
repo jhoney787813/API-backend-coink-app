@@ -19,10 +19,9 @@ La estructura de la base de datos propuesta se basa en los requerimientos inicia
 
 Se crea una base de datos llamada `UserDB`.El modeloasegura la integridad de los datos y previene duplicados.
 
+**Sección Definiciones (DDL)**
 
-```sql
-CREATE DATABASE UserDB;
-```
+Por defecto nuestra BD de llama "postgres"
 
 ## Tablas
 
@@ -120,3 +119,203 @@ CREATE TABLE UserData (
 El diseño de la base de datos cumple con todos los requerimientos iniciales mediante un enfoque relacional. La integridad referencial se garantiza a través de llaves foráneas entre `UserData`, `City`, `State` y `Country`. Además, la inclusión de campos `UNIQUE` y la creación automática de marcas temporales (`created_at`) asegura que los datos sean únicos y rastreables. Esta estructura ofrece flexibilidad para agregar más países, estados y ciudades sin afectar la funcionalidad del sistema.
 
 Con el dieseño de este modelo estamos garantizando **Atomicidad**, **Consistencia** y **Durabilidad** en las transacciones. Sin embargo, para lograr una implementación completamente ACID, el desarrollo de la API debe incorporar consideraciones sobre **Aislamiento** o manejo de transacciones cuando hagamos una consulta, inserción o actualización para que aseguremos la integridad de los datos.
+
+**Sección Manipulacion (DML)**
+
+## Justificación: Stored Procedures y Stored Functions en PostgreSQL
+
+### Diferencia Clave
+Los **Stored Procedures** son para modificaciones en la base de datos, mientras que las **Stored Functions** son para devolver resultados de consultas. Esto asegura una clara separación de responsabilidades en la lógica de base de datos.
+
+## Implementación de Funciones en PostgreSQL
+
+
+### Explicación de la Función `GetUserByCardId`
+
+En nuestro caso, hemos creado una **Stored Function** para devolver los datos del usuario consultando por el número de cédula. Esta función permite recuperar información específica por el número de cédula del usuario registrado.
+
+### Estructura de la Función
+```sql
+CREATE OR REPLACE FUNCTION fnGetUserByCardId(
+    p_card_id VARCHAR(12)
+)
+RETURNS TABLE(
+    card_id VARCHAR(12),
+    name VARCHAR(100),
+    phone VARCHAR(15),
+    address VARCHAR(255),
+    city_id INT,
+    city_name VARCHAR(100)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        u.card_id,
+        u.name,
+        u.phone,
+        u.address,
+        u.city_id,
+        c.name AS city_name
+    FROM UserData u
+    JOIN City c ON u.city_id = c.id
+    WHERE u.card_id = p_card_id;
+END;
+$$ LANGUAGE plpgsql;
+
+```
+### Llamada a la Función
+La función se invoca de la siguiente manera:
+```sql
+SELECT * FROM fnGetUserByCardId('123');
+```
+### Explicación de la Función `GetUserByCardId`
+
+En nuestro caso, hemos creado una **Stored Function** para devolver todos los usuarios registrados sin filtros.
+### Estructura de la Función
+
+```sql
+    CREATE OR REPLACE FUNCTION fnGetUsersData()
+    RETURNS TABLE(
+        card_id VARCHAR(12),
+        name VARCHAR(100),
+        phone VARCHAR(15),
+        address VARCHAR(255),
+        city_id INT,
+        city_name VARCHAR(100)
+    ) AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT 
+            u.card_id,
+            u.name,
+            u.phone,
+            u.address,
+            u.city_id,
+            c.name AS city_name
+        FROM UserData u
+        JOIN City c ON u.city_id = c.id;
+    
+    END;
+    $$ LANGUAGE plpgsql;
+```
+### Llamada a la Función
+La función se invoca de la siguiente manera:
+```sql
+SELECT * FROM fnGetUsersData();
+```
+
+## Procedimiento con Manejo de Transacciones en PostgreSQL
+
+Este procedimiento `InsertUserData` inserta datos en la tabla `UserData` y utiliza transacciones para asegurar que los cambios se confirmen (**commit**) o se deshagan (**rollback**) en caso de error.
+
+**NOTA:** El Manejo implícito de transacciones: PostgreSQL ya controla las transacciones automáticamente, por lo que no es necesario usar COMMIT o ROLLBACK en el procedimiento.
+## Procedimientos Almacenados para la Tabla UserData
+### Estructura del Procedure
+
+```sql
+CREATE OR REPLACE PROCEDURE spInsertUserData(
+    p_card_id VARCHAR(12),
+    p_name VARCHAR(100),
+    p_phone VARCHAR(15),
+    p_address VARCHAR(255),
+    p_city_id INT
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    BEGIN
+        INSERT INTO UserData(card_id, name, phone, address, city_id, created_at)
+        VALUES (p_card_id, p_name, p_phone, p_address, p_city_id, CURRENT_TIMESTAMP);
+        --COMMIT;
+        RAISE NOTICE 'User with card_id: % inserted successfully.', p_card_id;
+    EXCEPTION
+        WHEN OTHERS THEN
+           --ROLLBACK;
+            RAISE EXCEPTION 'Error inserting user with card_id: %. Transaction rolled back.', p_card_id;
+    END;
+END;
+$$;
+```
+### Llamada al procedure
+La procedure se invoca de la siguiente manera:
+```sql
+CALL spInsertUserData('123456789012', 'John Doe', '1234567890', '123 Main St', 1);
+```
+
+
+
+## DeleteUserByCardId - Eliminar Usuario por Número de Cédula
+
+### Descripción:
+Este procedimiento almacenado elimina un usuario de la tabla `UserData` basado en el número de cédula proporcionado (`card_id`).
+
+### Parámetros:
+- `p_card_id`: El número de cédula único del usuario que se desea eliminar (`VARCHAR(12)`).
+
+### SQL:
+```sql
+CREATE OR REPLACE PROCEDURE spDeleteUserByCardId(
+    p_card_id VARCHAR(12)
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    BEGIN
+        DELETE FROM UserData
+        WHERE card_id = p_card_id;
+        RAISE NOTICE 'Usuario con card_id: % eliminado correctamente.', p_card_id;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE EXCEPTION 'Error al eliminar el usuario con card_id: %', p_card_id;
+    END;
+END;
+$$;
+
+```
+### Llamada al procedure
+La procedure se invoca de la siguiente manera:
+```sql
+CALL spDeleteUserByCardId('123456789012');
+```
+
+## UpdateUserData - Actualizar Información del Usuario por Número de Cédula
+
+### Descripción:
+El procedimiento almacenado `UpdateUserData` permite actualizar la información de un usuario en la tabla `UserData` utilizando el número de cédula (`card_id`) como clave única. Los datos que se pueden actualizar incluyen el nombre del usuario, el número de teléfono, la dirección y la ciudad donde reside.
+
+### Parámetros:
+- **`p_card_id`** (`VARCHAR(12)`): El número de cédula único del usuario que se desea actualizar.
+- **`p_name`** (`VARCHAR(100)`): El nuevo nombre del usuario.
+- **`p_phone`** (`VARCHAR(15)`): El nuevo número de teléfono del usuario.
+- **`p_address`** (`VARCHAR(255)`): La nueva dirección del usuario.
+- **`p_city_id`** (`INT`): El ID de la ciudad a la que pertenece el usuario, relacionado con la tabla `City`.
+
+### SQL:
+```sql
+CREATE OR REPLACE PROCEDURE spUpdateUserData(
+    p_card_id VARCHAR(12),
+    p_name VARCHAR(100),
+    p_phone VARCHAR(15),
+    p_address VARCHAR(255),
+    p_city_id INT
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    BEGIN
+        UPDATE UserData
+        SET name = p_name,
+            phone = p_phone,
+            address = p_address,
+            city_id = p_city_id,
+        WHERE card_id = p_card_id;
+        RAISE NOTICE 'Usuario con card_id: % actualizado correctamente.', p_card_id;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE EXCEPTION 'Error al actualizar el usuario con card_id: %', p_card_id;
+    END;
+END;
+$$;
+```
+### Llamada al procedure
+La procedure se invoca de la siguiente manera:
+```sql
+    CALL spUpdateUserData('123456789012', 'Jane Doe', '9876543210', '456 Calle Nueva', 2);
+```
