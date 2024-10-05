@@ -61,6 +61,10 @@ La distribución física de paquetes que mencionas en la construcción de APIs s
   
 ![image](https://github.com/user-attachments/assets/837f737e-ba64-4827-a932-bda49e327f5e)
 
+## 5. Documentación de endpoint con  `swagger` (contratros y respuestas)
+
+Para nuestro caso, un "endpoint" es igual a un "controller" de API, pero por terminología lo denominamos "endpoint", ya que son los puntos de entrada a nuestros recursos. A través de ellos, exponemos y permitimos la interacción sobre el contexto de administración de clientes. Un "endpoint" es la URL específica donde los clientes acceden o manipulan recursos, mientras que el "controller" organiza la lógica que maneja esas solicitudes. El término "endpoint" refleja mejor el acceso público a los recursos, a diferencia del "controller", que es parte de la implementación interna del servidor.
+
 ## Algo a destacar
 
 Este diseño asegura que cada módulo sea independiente, fácil de probar y de modificar. El uso de **CQRS** permite que los comandos y consultas se manejen de manera eficiente, lo que mejora la escalabilidad. Además, el enfoque de **Vertical Slice** garantiza que cada funcionalidad sea tratada como una unidad completa, facilitando el mantenimiento y la evolución del sistema. La aplicación de principios **SOLID** favorece un código más limpio, reutilizable y adaptable.
