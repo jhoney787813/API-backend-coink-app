@@ -12,7 +12,7 @@ namespace Domain.UseCases
             _UsersRepository = UsersRepository;
         }
 
-        public async Task<User> Execute(string identification)
+        public async Task<UserData> Execute(string identification)
         {
             var result = await _UsersRepository.GetById(identification);
             return result;

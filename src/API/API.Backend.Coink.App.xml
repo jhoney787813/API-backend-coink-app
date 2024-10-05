@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API.Backend.Coink.App</name>
+    </assembly>
+    <members>
+        <member name="M:API.Controllers.CreateUserEndpoint.CreateUser(Application.Users.Command.Create.CreateUserCommand)">
+            <summary>
+            Permite el registro de un nuevo usuario
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.GetAllUsersEndpoint.GetAllUsers">
+            <summary>
+            Permite consultar la lista de todos los usuarios existentes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.GetByIdEndpoint.GetById(System.String)">
+            <summary>
+            Permite consultar la información de un usuario pasando la cédula como parametro ¿
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Backend.Coink.App.Controllers.DeleteUserEndpoint.DeleteUser(System.String)">
+            <summary>
+            Permite la eliminación de un usuario parando la cédula como parametro
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:API.Extensions.ConfigureSwaggerOptions">
+            <summary>
+            Configures the Swagger generation options.
+            </summary>
+            <remarks>This allows API versioning to define a Swagger document per API version after the
+            <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
+        </member>
+        <member name="M:API.Extensions.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:API.Extensions.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="provider">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+        </member>
+        <member name="M:API.Extensions.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:API.Extensions.SwaggerDefaultValues">
+            <summary>
+            Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
+            </summary>
+            <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
+            Once they are fixed and published, this class can be removed.</remarks>
+        </member>
+        <member name="M:API.Extensions.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation using the given context.
+            </summary>
+            <param name="operation">The operation to apply the filter to.</param>
+            <param name="context">The current operation filter context.</param>
+        </member>
+    </members>
+</doc>

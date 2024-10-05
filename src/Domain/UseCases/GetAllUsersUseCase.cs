@@ -13,7 +13,7 @@ namespace Domain.UseCases
             _UsersRepository = UsersRepository;
         }
 
-        public Task<IEnumerable<User>> Execute()
+        public Task<IEnumerable<UserData>> Execute()
         {
             return _UsersRepository.GetAll();
         }

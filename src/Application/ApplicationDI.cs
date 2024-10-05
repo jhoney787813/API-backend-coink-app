@@ -1,4 +1,4 @@
-﻿using Application.Users.Create;
+﻿using Application.Users.Command.Create;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

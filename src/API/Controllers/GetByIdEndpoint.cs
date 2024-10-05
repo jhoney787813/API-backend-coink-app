@@ -1,14 +1,12 @@
-﻿using Application.Users.Create;
-using Application.Users.Delete;
-using Application.Users.GetAll;
-using Application.Users.GetById;
+﻿
+using Application.Users.Query.GetAll;
+using Application.Users.Query.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 [Tags("Users")]
 [ApiController]
-[Route("api/[controller]")]
 public class GetByIdEndpoint : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -17,8 +15,18 @@ public class GetByIdEndpoint : ControllerBase
     {
         _mediator = mediator;
     }
-
-    [HttpGet("{identification}")]
+    /// <summary>
+    /// Permite consultar la información de un usuario pasando la cédula como parametro ¿
+    /// </summary>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(GetUserByIdQueryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Route("api/v{version:apiVersion}/user/{identification}")]
+    [HttpGet]
     public async Task<IActionResult> GetById(string identification)
     {
         var query = new GetUserByIdQuery(identification);

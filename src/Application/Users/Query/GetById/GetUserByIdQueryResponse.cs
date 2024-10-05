@@ -1,15 +1,15 @@
-﻿namespace Domain.Entities
+﻿namespace Application.Users.Query.GetById
 {
-	public class User
-	{
-        public User(string identification, string fulltName, string phone, string address, int cityId)
+    public class GetUserByIdQueryResponse
+    {
+        public GetUserByIdQueryResponse(string identification, string fullName, string phone, string address, int cityId, string cityName)
         {
             Identification = identification;
-            FullName = fulltName;
+            FullName = fullName;
             Phone = phone;
             Address = address;
             CityId = cityId;
-
+            CityName = cityName;
         }
 
         public string Identification { get; set; }
@@ -17,6 +17,6 @@
         public string Phone { get; set; }
         public string Address { get; set; }
         public int CityId { get; set; }
-     
+        public string CityName { get; set; }
     }
 }

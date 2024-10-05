@@ -1,36 +1,76 @@
-﻿using Domain.Entities;
+﻿using Dapper;
+using Domain.Entities;
 using Domain.Interfaces.Repositories;
+using System.Data;
+using System.Net;
+using System.Numerics;
+using System.Xml.Linq;
 
 namespace Infrastructure.Repositories
 {
 	public class UsersRepository : IUsersRepository
     {
-        private List<User> _Users;
+        private readonly IDbConnection _dbConnection;
 
-		public UsersRepository()
+		public UsersRepository(IDbConnection dbConnection)
 		{
-            _Users = new List<User>();
+            _dbConnection = dbConnection;
+
 		}
 
         public async Task<User> Add(User User)
         {
-            _Users.Add(User);
-            return User;
+            try
+            {
+                var sql = @"CALL spInsertUserData(@CardId, @Name, @Phone, @Address, @CityId)";
+                await _dbConnection.ExecuteAsync(sql, new { CardId = User.Identification, Name= User.FullName, Phone=User.Phone, Address= User.Address, CityId= User.CityId });
+
+                return User;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public async Task Delete(string identification)
         {
-            _Users.Remove(_Users.FirstOrDefault(x=> x.Identification == identification));
+            try
+            {
+                var sql = "CALL spDeleteUserByCardId(@CardId);";
+                await _dbConnection.ExecuteAsync(sql, new { CardId = identification });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<UserData>> GetAll()
         {
-            return _Users;
+            try
+            {
+                var sql = @"SELECT * FROM fnGetUsersData();";
+                return await _dbConnection.QueryAsync<UserData>(sql);
+            }catch (Exception ex)
+            {
+                return null;
+            }
+        
         }
 
-        public async Task<User> GetById(string identification)
+        public async Task<UserData> GetById(string identification)
         {
-            return _Users.FirstOrDefault(x => x.Identification == identification)!;
+            try
+            {
+                var sql = @"SELECT * FROM fnGetUserByCardId(@CardId);";
+                return await _dbConnection.QueryFirstOrDefaultAsync<UserData>(sql, new { CardId = identification });
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+
         }
     }
 }

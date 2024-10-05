@@ -2,10 +2,10 @@
 using Domain.Interfaces.UseCases;
 using MediatR;
 
-namespace Application.Users.GetById
+namespace Application.Users.Query.GetById
 {
-	public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, GetUserByIdQueryResponse?>
-	{
+    public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, GetUserByIdQueryResponse?>
+    {
         private readonly IGetUserByIdUseCase _getUserByIdUseCase;
 
         public GetUserByIdQueryHandler(IGetUserByIdUseCase getUserByIdUseCase)
@@ -19,10 +19,10 @@ namespace Application.Users.GetById
             return MapToResponse(result);
         }
 
-        private GetUserByIdQueryResponse? MapToResponse(User User)
+        private GetUserByIdQueryResponse? MapToResponse(UserData User)
         {
             if (User is not null)
-                return new GetUserByIdQueryResponse(User.Identification, User.FullName, User.Phone, User.Address, User.BirthDate);
+                return new GetUserByIdQueryResponse(User.Identification, User.FullName, User.Phone, User.Address, User.CityId,User.CityName);
 
             return default;
         }

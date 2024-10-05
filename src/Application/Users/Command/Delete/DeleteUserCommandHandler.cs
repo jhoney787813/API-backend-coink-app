@@ -1,7 +1,7 @@
 ﻿using Domain.Interfaces.UseCases;
 using MediatR;
 
-namespace Application.Users.Delete
+namespace Application.Users.Command.Delete
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
     {

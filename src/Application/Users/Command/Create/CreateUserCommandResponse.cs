@@ -1,8 +1,8 @@
-﻿namespace Domain.Entities
+﻿namespace Application.Users.Command.Create
 {
-	public class User
-	{
-        public User(string identification, string fulltName, string phone, string address, int cityId)
+    public class CreateUserCommandResponse
+    {
+        public CreateUserCommandResponse(string identification, string fulltName, string phone, string address, int cityId)
         {
             Identification = identification;
             FullName = fulltName;
@@ -17,6 +17,5 @@
         public string Phone { get; set; }
         public string Address { get; set; }
         public int CityId { get; set; }
-     
     }
 }

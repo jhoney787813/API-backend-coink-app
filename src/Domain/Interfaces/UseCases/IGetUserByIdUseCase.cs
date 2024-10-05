@@ -4,6 +4,6 @@ namespace Domain.Interfaces.UseCases
 {
 	public interface IGetUserByIdUseCase
 	{
-		Task<User> Execute(string identification);
+		Task<UserData> Execute(string identification);
 	}
 }

@@ -1,14 +1,10 @@
-﻿using Application.Users.Create;
-using Application.Users.Delete;
-using Application.Users.GetAll;
-using Application.Users.GetById;
+﻿using Application.Users.Query.GetAll;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 [Tags("Users")]
 [ApiController]
-[Route("api/[controller]")]
 public class GetAllUsersEndpoint : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -17,7 +13,17 @@ public class GetAllUsersEndpoint : ControllerBase
     {
         _mediator = mediator;
     }
-
+    /// <summary>
+    /// Permite consultar la lista de todos los usuarios existentes
+    /// </summary>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(GetAllUsersQueryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Route("api/v{version:apiVersion}/user")]
     [HttpGet]
     public async Task<IActionResult> GetAllUsers()
     {
