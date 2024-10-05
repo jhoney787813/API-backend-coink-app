@@ -236,7 +236,7 @@ END;
 $$;
 ```
 ### Llamada al procedure
-La procedure se invoca de la siguiente manera:
+El procedure se invoca de la siguiente manera:
 ```sql
 CALL spInsertUserData('123456789012', 'John Doe', '1234567890', '123 Main St', 1);
 ```
@@ -271,7 +271,7 @@ $$;
 
 ```
 ### Llamada al procedure
-La procedure se invoca de la siguiente manera:
+El procedure se invoca de la siguiente manera:
 ```sql
 CALL spDeleteUserByCardId('123456789012');
 ```
@@ -315,7 +315,7 @@ END;
 $$;
 ```
 ### Llamada al procedure
-La procedure se invoca de la siguiente manera:
+El procedure se invoca de la siguiente manera:
 ```sql
     CALL spUpdateUserData('123456789012', 'Jane Doe', '9876543210', '456 Calle Nueva', 2);
 ```
