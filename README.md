@@ -1,5 +1,9 @@
+**![image](https://github.com/user-attachments/assets/3f2ed6e4-b5d1-487d-8760-37905c811ff3)**
+
 # API-backend-coink-app
 Este repositorio tiene como objetivo evidenciar mis conocimientos como especialista Backend en la construcción de API REST, utilizando tecnologías como .NET, C# y SQL. El desarrollo sigue el patrón de diseño CQRS junto con MediatR, como parte de la implementación de una solución de software para la compañía Coink S.A., catalogada dentro de una arquitectura limpia (Clean Architecture) y orientada a microservicios.
+
+
 
 ## Distribución del repositorio
 
