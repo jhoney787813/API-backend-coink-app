@@ -19,10 +19,9 @@ La estructura de la base de datos propuesta se basa en los requerimientos inicia
 
 Se crea una base de datos llamada `UserDB`.El modeloasegura la integridad de los datos y previene duplicados.
 
+**Sección Definiciones (DDL)**
 
-```sql
-CREATE DATABASE UserDB;
-```
+Por defecto nuestra BD de llama "postgres"
 
 ## Tablas
 
@@ -120,3 +119,52 @@ CREATE TABLE UserData (
 El diseño de la base de datos cumple con todos los requerimientos iniciales mediante un enfoque relacional. La integridad referencial se garantiza a través de llaves foráneas entre `UserData`, `City`, `State` y `Country`. Además, la inclusión de campos `UNIQUE` y la creación automática de marcas temporales (`created_at`) asegura que los datos sean únicos y rastreables. Esta estructura ofrece flexibilidad para agregar más países, estados y ciudades sin afectar la funcionalidad del sistema.
 
 Con el dieseño de este modelo estamos garantizando **Atomicidad**, **Consistencia** y **Durabilidad** en las transacciones. Sin embargo, para lograr una implementación completamente ACID, el desarrollo de la API debe incorporar consideraciones sobre **Aislamiento** o manejo de transacciones cuando hagamos una consulta, inserción o actualización para que aseguremos la integridad de los datos.
+
+**Sección Manipulacion (DML) **
+
+## Justificación: Stored Procedures y Stored Functions en PostgreSQL
+
+### Diferencia Clave
+Los **Stored Procedures** son para modificaciones en la base de datos, mientras que las **Stored Functions** son para devolver resultados de consultas. Esto asegura una clara separación de responsabilidades en la lógica de base de datos.
+
+## Implementación de Funciones en PostgreSQL
+
+
+## Explicación de la Función `GetUserByCardId`
+
+En nuestro caso, hemos creado una **Stored Function** para devolver los datos del usuario consultando por el número de cédula. Esta función permite recuperar información específica por el número de cédula del usuario registrado.
+
+### Estructura de la Función
+```sql
+CREATE OR REPLACE FUNCTION GetUserByCardId(
+    p_card_id VARCHAR(12)
+)
+RETURNS TABLE(
+    card_id VARCHAR(12),
+    name VARCHAR(100),
+    phone VARCHAR(15),
+    address VARCHAR(255),
+    city_id INT,
+    city_name VARCHAR(100)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        u.card_id,
+        u.name,
+        u.phone,
+        u.address,
+        u.city_id,
+        c.name AS city_name
+    FROM UserData u
+    JOIN City c ON u.city_id = c.id
+    WHERE u.card_id = p_card_id;
+END;
+$$ LANGUAGE plpgsql;
+
+```
+### Llamada a la Función
+La función se invoca de la siguiente manera:
+```sql
+SELECT * FROM GetUserByCardId('123');
+
