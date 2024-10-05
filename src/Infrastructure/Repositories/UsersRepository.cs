@@ -5,32 +5,32 @@ namespace Infrastructure.Repositories
 {
 	public class UsersRepository : IUsersRepository
     {
-        private List<User> _customers;
+        private List<User> _Users;
 
 		public UsersRepository()
 		{
-            _customers = new List<User>();
+            _Users = new List<User>();
 		}
 
-        public async Task<User> Add(User customer)
+        public async Task<User> Add(User User)
         {
-            _customers.Add(customer);
-            return customer;
+            _Users.Add(User);
+            return User;
         }
 
         public async Task Delete(string identification)
         {
-            _customers.Remove(_customers.FirstOrDefault(x=> x.Identification == identification));
+            _Users.Remove(_Users.FirstOrDefault(x=> x.Identification == identification));
         }
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            return _customers;
+            return _Users;
         }
 
         public async Task<User> GetById(string identification)
         {
-            return _customers.FirstOrDefault(x => x.Identification == identification)!;
+            return _Users.FirstOrDefault(x => x.Identification == identification)!;
         }
     }
 }

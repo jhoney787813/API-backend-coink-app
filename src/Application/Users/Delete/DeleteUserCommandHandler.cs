@@ -5,16 +5,16 @@ namespace Application.Users.Delete
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
     {
-        private readonly IDeleteUserUseCase _deleteCustomerUseCase;
+        private readonly IDeleteUserUseCase _deleteUserUseCase;
 
-        public DeleteUserCommandHandler(IDeleteUserUseCase deleteCustomerUseCase)
+        public DeleteUserCommandHandler(IDeleteUserUseCase deleteUserUseCase)
         {
-            _deleteCustomerUseCase = deleteCustomerUseCase;
+            _deleteUserUseCase = deleteUserUseCase;
         }
 
         public async Task Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            await _deleteCustomerUseCase.Execute(request.Identification);
+            await _deleteUserUseCase.Execute(request.Identification);
         }
     }
 }

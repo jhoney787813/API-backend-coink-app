@@ -5,16 +5,16 @@ namespace Domain.UseCases
 {
     public class CreateUserUseCase : ICreateUserUseCase
     {
-        private readonly IUsersRepository _customersRepository;
+        private readonly IUsersRepository _UsersRepository;
 
-        public CreateUserUseCase(IUsersRepository customersRepository)
+        public CreateUserUseCase(IUsersRepository UsersRepository)
         {
-            _customersRepository = customersRepository;
+            _UsersRepository = UsersRepository;
         }
 
-        public async Task<User> Execute(User customer)
+        public async Task<User> Execute(User User)
         {
-            var result = await _customersRepository.Add(customer);
+            var result = await _UsersRepository.Add(User);
             return result;
         }
     }

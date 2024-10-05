@@ -4,15 +4,15 @@ namespace Domain.UseCases
 {
 	public class DeleteUserUseCase : IDeleteUserUseCase
     {
-        private readonly IUsersRepository _customersRepository;
-        public DeleteUserUseCase(IUsersRepository customersRepository)
+        private readonly IUsersRepository _UsersRepository;
+        public DeleteUserUseCase(IUsersRepository UsersRepository)
         {
-            _customersRepository = customersRepository;
+            _UsersRepository = UsersRepository;
         }
 
         public async Task Execute(string identification)
         {
-            await _customersRepository.Delete(identification);
+            await _UsersRepository.Delete(identification);
         }
     }
 }

@@ -6,16 +6,16 @@ namespace Domain.UseCases
 {
     public class GetAllUsersUseCase : IGetAllUserUseCase
     {
-        private readonly IUsersRepository _customersRepository;
+        private readonly IUsersRepository _UsersRepository;
 
-        public GetAllUsersUseCase(IUsersRepository customersRepository)
+        public GetAllUsersUseCase(IUsersRepository UsersRepository)
         {
-            _customersRepository = customersRepository;
+            _UsersRepository = UsersRepository;
         }
 
         public Task<IEnumerable<User>> Execute()
         {
-            return _customersRepository.GetAll();
+            return _UsersRepository.GetAll();
         }
     }
 }

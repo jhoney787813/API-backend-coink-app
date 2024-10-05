@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API-backend-coink-app", "API\API-backend-coink-app.csproj", "{547AEB4F-FD15-4B38-8D31-AA08DD5A6BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Backend.Coink.App", "API\API.Backend.Coink.App.csproj", "{547AEB4F-FD15-4B38-8D31-AA08DD5A6BF4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{B75476AA-8CF6-4A1B-B95D-34716F9DA13A}"
 EndProject

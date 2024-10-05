@@ -6,23 +6,23 @@ namespace Application.Users.GetById
 {
 	public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, GetUserByIdQueryResponse?>
 	{
-        private readonly IGetUserByIdUseCase _getCustomerByIdUseCase;
+        private readonly IGetUserByIdUseCase _getUserByIdUseCase;
 
-        public GetUserByIdQueryHandler(IGetUserByIdUseCase getCustomerByIdUseCase)
+        public GetUserByIdQueryHandler(IGetUserByIdUseCase getUserByIdUseCase)
         {
-            _getCustomerByIdUseCase = getCustomerByIdUseCase;
+            _getUserByIdUseCase = getUserByIdUseCase;
         }
 
         public async Task<GetUserByIdQueryResponse?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _getCustomerByIdUseCase.Execute(request.Identification);
+            var result = await _getUserByIdUseCase.Execute(request.Identification);
             return MapToResponse(result);
         }
 
-        private GetUserByIdQueryResponse? MapToResponse(User customer)
+        private GetUserByIdQueryResponse? MapToResponse(User User)
         {
-            if (customer is not null)
-                return new GetCustomerByIdQueryResponse(customer.Identification, customer.FullName, customer.Phone, customer.Address, customer.BirthDate);
+            if (User is not null)
+                return new GetUserByIdQueryResponse(User.Identification, User.FullName, User.Phone, User.Address, User.BirthDate);
 
             return default;
         }

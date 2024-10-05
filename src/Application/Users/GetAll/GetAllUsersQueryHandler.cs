@@ -6,16 +6,16 @@ namespace Application.Users.GetAll
 {
 	public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, IEnumerable<GetAllUsersQueryResponse>>
 	{
-        private readonly IGetAllUserUseCase _getAllCustomersUseCase;
+        private readonly IGetAllUserUseCase _getAllUsersUseCase;
 
-        public GetAllUsersQueryHandler(IGetAllUserUseCase getAllCustomersUseCase)
+        public GetAllUsersQueryHandler(IGetAllUserUseCase getAllUsersUseCase)
         {
-            _getAllCustomersUseCase = getAllCustomersUseCase;
+            _getAllUsersUseCase = getAllUsersUseCase;
         }
 
         public async Task<IEnumerable<GetAllUsersQueryResponse>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var result = await _getAllCustomersUseCase.Execute();
+            var result = await _getAllUsersUseCase.Execute();
             
             var response = MapToResponse(result);
             
@@ -26,14 +26,14 @@ namespace Application.Users.GetAll
         {
             List<GetAllUsersQueryResponse> response = new();
             foreach (var item in result)
-                response.Add(CreateCustomerRow(item));
+                response.Add(CreateUserRow(item));
 
             return response;
         }
 
-        private GetAllUsersQueryResponse CreateCustomerRow(User customer)
+        private GetAllUsersQueryResponse CreateUserRow(User User)
         {
-            return new GetAllCustomersQueryResponse(customer.Identification, customer.FullName, customer.Phone, customer.Address, customer.BirthDate);
+            return new GetAllUsersQueryResponse(User.Identification, User.FullName, User.Phone, User.Address, User.BirthDate);
         }
     }
 }

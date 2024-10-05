@@ -9,11 +9,11 @@ namespace Application.Users.Create
 {
 	public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<CreateUserCommandResponse>>
 	{
-        private readonly ICreateUserUseCase _createCustomerUseCase;
+        private readonly ICreateUserUseCase _createUserUseCase;
 
-        public CreateUserCommandHandler(ICreateUserUseCase createCustomerUseCase)
+        public CreateUserCommandHandler(ICreateUserUseCase createUserUseCase)
         {
-            _createCustomerUseCase = createCustomerUseCase;
+            _createUserUseCase = createUserUseCase;
         }
 
         public async Task<Result<CreateUserCommandResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -21,8 +21,8 @@ namespace Application.Users.Create
             StringBuilder errors;
             if (ModelIsValid(request, out errors))
             {
-                var customer = new Customer(request.Identification, request.FirstName, request.LastName, request.Email, request.BirthDate);
-                var result = await _createCustomerUseCase.Execute(customer);
+                var User = new User(request.Identification, request.FirstName, request.LastName, request.Email, request.BirthDate);
+                var result = await _createUserUseCase.Execute(User);
                 return Result<CreateUserCommandResponse>.Success(MapToResponse(result));
             }
 
@@ -51,9 +51,9 @@ namespace Application.Users.Create
             return errors.Length == 0;
         }
 
-        private CreateUserCommandResponse MapToResponse(User customer)
+        private CreateUserCommandResponse MapToResponse(User User)
         {
-            return new CreateUserCommandResponse(customer.Identification, customer.FullName, customer.Phone, customer.Address, customer.BirthDate);
+            return new CreateUserCommandResponse(User.Identification, User.FullName, User.Phone, User.Address, User.BirthDate);
         }
     }
 }

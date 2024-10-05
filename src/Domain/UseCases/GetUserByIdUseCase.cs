@@ -5,16 +5,16 @@ namespace Domain.UseCases
 {
 	public class GetUserByIdUseCase : IGetUserByIdUseCase
     {
-        private readonly IUsersRepository _customersRepository;
+        private readonly IUsersRepository _UsersRepository;
 
-        public GetUserByIdUseCase(IUsersRepository customersRepository)
+        public GetUserByIdUseCase(IUsersRepository UsersRepository)
         {
-            _customersRepository = customersRepository;
+            _UsersRepository = UsersRepository;
         }
 
         public async Task<User> Execute(string identification)
         {
-            var result = await _customersRepository.GetById(identification);
+            var result = await _UsersRepository.GetById(identification);
             return result;
         }
     }
