@@ -209,7 +209,7 @@ SELECT * FROM fnGetUsersData();
 Este procedimiento `InsertUserData` inserta datos en la tabla `UserData` y utiliza transacciones para asegurar que los cambios se confirmen (**commit**) o se deshagan (**rollback**) en caso de error.
 
 **NOTA:** El Manejo implícito de transacciones: PostgreSQL ya controla las transacciones automáticamente, por lo que no es necesario usar COMMIT o ROLLBACK en el procedimiento.
-
+## Procedimientos Almacenados para la Tabla UserData
 ### Estructura del Procedure
 
 ```sql
@@ -235,8 +235,13 @@ BEGIN
 END;
 $$;
 ```
+### Llamada al procedure
+La procedure se invoca de la siguiente manera:
+```sql
+CALL spInsertUserData('123456789012', 'John Doe', '1234567890', '123 Main St', 1);
+```
 
-# Procedimientos Almacenados para la Tabla UserData
+
 
 ## DeleteUserByCardId - Eliminar Usuario por Número de Cédula
 
@@ -253,16 +258,11 @@ CREATE OR REPLACE PROCEDURE spDeleteUserByCardId(
 )
 LANGUAGE plpgsql AS $$
 BEGIN
-    -- Intentar eliminar al usuario
     BEGIN
         DELETE FROM UserData
         WHERE card_id = p_card_id;
-
-        -- Notificación de éxito
         RAISE NOTICE 'Usuario con card_id: % eliminado correctamente.', p_card_id;
-
     EXCEPTION
-        -- Manejo de errores
         WHEN OTHERS THEN
             RAISE EXCEPTION 'Error al eliminar el usuario con card_id: %', p_card_id;
     END;
@@ -270,6 +270,12 @@ END;
 $$;
 
 ```
+### Llamada al procedure
+La procedure se invoca de la siguiente manera:
+```sql
+CALL spDeleteUserByCardId('123456789012');
+```
+
 ## UpdateUserData - Actualizar Información del Usuario por Número de Cédula
 
 ### Descripción:
@@ -307,4 +313,9 @@ BEGIN
     END;
 END;
 $$;
-
+```
+### Llamada al procedure
+La procedure se invoca de la siguiente manera:
+```sql
+    CALL spUpdateUserData('123456789012', 'Jane Doe', '9876543210', '456 Calle Nueva', 2);
+```
