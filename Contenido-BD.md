@@ -167,8 +167,7 @@ $$ LANGUAGE plpgsql;
 La función se invoca de la siguiente manera:
 ```sql
 SELECT * FROM GetUserByCardId('123');
-
-
+```
 ### Explicación de la Función `GetUserByCardId`
 
 En nuestro caso, hemos creado una **Stored Function** para devolver todos los usuarios registrados sin filtros.
@@ -203,6 +202,6 @@ En nuestro caso, hemos creado una **Stored Function** para devolver todos los us
 La función se invoca de la siguiente manera:
 ```sql
 SELECT * FROM GetUsersData();
-
+```
 
 
