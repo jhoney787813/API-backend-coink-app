@@ -120,7 +120,7 @@ El diseño de la base de datos cumple con todos los requerimientos iniciales med
 
 Con el dieseño de este modelo estamos garantizando **Atomicidad**, **Consistencia** y **Durabilidad** en las transacciones. Sin embargo, para lograr una implementación completamente ACID, el desarrollo de la API debe incorporar consideraciones sobre **Aislamiento** o manejo de transacciones cuando hagamos una consulta, inserción o actualización para que aseguremos la integridad de los datos.
 
-**Sección Manipulacion (DML) **
+**Sección Manipulacion (DML)**
 
 ## Justificación: Stored Procedures y Stored Functions en PostgreSQL
 
