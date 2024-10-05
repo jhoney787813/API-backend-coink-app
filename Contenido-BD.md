@@ -130,7 +130,7 @@ Los **Stored Procedures** son para modificaciones en la base de datos, mientras 
 ## Implementación de Funciones en PostgreSQL
 
 
-## Explicación de la Función `GetUserByCardId`
+### Explicación de la Función `GetUserByCardId`
 
 En nuestro caso, hemos creado una **Stored Function** para devolver los datos del usuario consultando por el número de cédula. Esta función permite recuperar información específica por el número de cédula del usuario registrado.
 
@@ -167,4 +167,42 @@ $$ LANGUAGE plpgsql;
 La función se invoca de la siguiente manera:
 ```sql
 SELECT * FROM GetUserByCardId('123');
+
+
+### Explicación de la Función `GetUserByCardId`
+
+En nuestro caso, hemos creado una **Stored Function** para devolver todos los usuarios registrados sin filtros.
+### Estructura de la Función
+
+```sql
+    CREATE OR REPLACE FUNCTION GetUsersData()
+    RETURNS TABLE(
+        card_id VARCHAR(12),
+        name VARCHAR(100),
+        phone VARCHAR(15),
+        address VARCHAR(255),
+        city_id INT,
+        city_name VARCHAR(100)
+    ) AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT 
+            u.card_id,
+            u.name,
+            u.phone,
+            u.address,
+            u.city_id,
+            c.name AS city_name
+        FROM UserData u
+        JOIN City c ON u.city_id = c.id
+    
+    END;
+    $$ LANGUAGE plpgsql;
+```
+### Llamada a la Función
+La función se invoca de la siguiente manera:
+```sql
+SELECT * FROM GetUsersData();
+
+
 
