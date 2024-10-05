@@ -41,12 +41,80 @@ La distribución física de paquetes que mencionas en la construcción de APIs s
   ![image](https://github.com/user-attachments/assets/f7015400-53f6-479b-8a5a-7e21d36a3c8c)
 
 
+
 ## 2. Proyecto de clases `Application` (comunicación entre controladores y capa de dominio)
 - Aquí se encuentran las clases encargadas de la **orquestación de comandos y consultas** dentro del patrón CQRS. Esta capa traduce las solicitudes de los controladores en acciones que deben realizarse en el dominio, y maneja el flujo de la aplicación sin incluir la lógica de negocio directa.
 - **CQRS** separa las operaciones de lectura y escritura en distintos modelos, permitiendo una gestión más eficiente y escalable de los datos.
 - Esto favorece principios como el de **responsabilidad única** y **abierto/cerrado**, ya que cada módulo solo tiene una razón para cambiar.
 - 
 ![image](https://github.com/user-attachments/assets/715d2d9c-7f93-430c-a947-143cc4e9473f)
+
+
+## Requisito de Negocio de validar los datos de entrada
+
+> Los servicios expuestos deberán validar que los datos ingresados como parámetros sean válidos. 
+
+Para esto se promone que los datos de los modelos son validados sobre la capa de aplicación antes de llegar al dominio para realizar las operaciones de inserción o actualización. Esto garantiza que los datos de entrada sean los esperados antes de ejecutar las acciones sobre la base de datos.
+
+Este enfoque asegura que se eviten errores innecesarios y que los datos ingresados sean correctos antes de afectar el sistema, preservando la integridad de la base de datos y las operaciones de negocio.
+
+
+## Explicación de la Clase `CreateUserCommandHandler`
+
+La clase `CreateUserCommandHandler` es responsable de manejar la creación de un nuevo usuario a través del comando `CreateUserCommand`. Su función principal es validar los datos antes de invocar la lógica de dominio para ejecutar la operación.
+
+![image](https://github.com/user-attachments/assets/0ec602f8-e5e9-42f1-a855-d04dd38e61f5)
+![image](https://github.com/user-attachments/assets/85dd46d6-7949-4945-b2ae-a0041ec02723)
+
+
+# Resumen de la Explicación de las Validaciones
+
+## Proceso de Validación
+La función `ModelIsValid` se encarga de validar las propiedades del comando `CreateUserCommand` antes de procesar los datos. Las validaciones aplicadas son:
+
+Todas estas validaciones se hacen tieniendo en cuenta el modelo de base de daos previamente creado para dar consistencia a los datos: respentando tipos de datos y longitud de los campos.
+
+- **FullName**:
+  - **Regla**: No puede estar vacío y no debe exceder los 100 caracteres.
+  - **Justificación**: Se requiere para identificar al usuario y garantizar consistencia en la base de datos.
+
+- **Identification**:
+  - **Regla**: No puede estar vacío y no debe exceder los 12 caracteres.
+  - **Justificación**: Es esencial para identificar al usuario con un tamaño manejable.
+
+- **Phone**:
+  - **Regla**: Si se proporciona, no debe exceder los 15 caracteres.
+  - **Justificación**: Limitar su longitud evita errores, ya que los números telefónicos internacionales no suelen exceder 15 caracteres.
+
+- **Address**:
+  - **Regla**: Si se proporciona, no debe exceder los 255 caracteres.
+  - **Justificación**: Mantener la dirección manejable y evitar problemas de rendimiento.
+
+- **CityId**:
+  - **Regla**: Debe ser un número mayor a 0.
+  - **Justificación**: Representa una ciudad válida; un valor no positivo indica una ciudad no válida.
+
+# Propuesta de Implementación para Validación de `CityId`
+
+## Introducción
+
+Para garantizar que el `CityId` solo sea válido si existe en la base de datos, se propone realizar una consulta adicional en la capa de aplicación. Esta validación se considera **adicional** y depende de la conexión con la base de datos.
+
+## Implementación Propuesta
+
+### 1. Inyección de Dependencia para la Verificación de Ciudades
+
+Se necesitará una interfaz que permita verificar si una ciudad existe en la base de datos.
+
+#### Interfaz `ICityRepository`
+
+```csharp
+public interface ICityRepository
+{
+    Task<bool> CityExistsAsync(int cityId);
+}
+
+
 
 ## 3. Proyecto de clases `Domain` (definiciones e implementaciones de reglas de negocio)
 - Aquí es donde se define la lógica de negocio principal, separada de los detalles de implementación. Esto incluye **interfaces** que definen contratos de comportamiento y reglas de negocio independientes de cómo se implementan.
@@ -64,6 +132,8 @@ La distribución física de paquetes que mencionas en la construcción de APIs s
 ## 5. Documentación de endpoint con  `swagger` (contratros y respuestas)
 
 Para nuestro caso, un "endpoint" es igual a un "controller" de API, pero por terminología lo denominamos "endpoint", ya que son los puntos de entrada a nuestros recursos. A través de ellos, exponemos y permitimos la interacción sobre el contexto de administración de clientes. Un "endpoint" es la URL específica donde los clientes acceden o manipulan recursos, mientras que el "controller" organiza la lógica que maneja esas solicitudes. El término "endpoint" refleja mejor el acceso público a los recursos, a diferencia del "controller", que es parte de la implementación interna del servidor.
+
+![image](https://github.com/user-attachments/assets/dc297055-dc82-4d0e-adaf-debe90d490d9)
 
 # API Specification: API.Backend.Coink.App
 
