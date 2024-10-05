@@ -94,17 +94,15 @@ Todas estas validaciones se hacen tieniendo en cuenta el modelo de base de daos 
   - **Regla**: Debe ser un número mayor a 0.
   - **Justificación**: Representa una ciudad válida; un valor no positivo indica una ciudad no válida.
 
-# Propuesta de Implementación para Validación de `CityId`
+# Propuesta Alterna de Implementación para Validación de `CityId`
 
-## Introducción
-
-Para garantizar que el `CityId` solo sea válido si existe en la base de datos, se propone realizar una consulta adicional en la capa de aplicación. Esta validación se considera **adicional** y depende de la conexión con la base de datos.
+si queremos garantizar que el `CityId` solo sea válido si existe en la base de datos, se propone realizar una consulta adicional en la capa de aplicación. Esta validación no esta contenida en el ódigo actual pero se podria consirar.
 
 ## Implementación Propuesta
 
 ### 1. Inyección de Dependencia para la Verificación de Ciudades
 
-Se necesitará una interfaz que permita verificar si una ciudad existe en la base de datos.
+Se necesitará una interfaz que permita verificar si una ciudad existe en la base de datos. liegoimplementar el repositiorio que ira a la tabla City y cargara en memoria cache todas la ciudades que estan almacenadas.
 
 #### Interfaz `ICityRepository`
 
@@ -113,8 +111,16 @@ public interface ICityRepository
 {
     Task<bool> CityExistsAsync(int cityId);
 }
+```
 
+La propuesta busca desarrollar un repositorio que valide la existencia de ciudades en la base de datos, utilizando caché para optimizar el rendimiento. E
+La utilización de `IMemoryCache` mejora significativamente el rendimiento al evitar consultas repetitivas y optimizar la experiencia del usuario al reducir los tiempos de respuesta.
 
+## Recomendaciones para Utilizar Caché
+
+1. **Implementación de Caché**: Utilizar `IMemoryCache` de Microsoft es una opción efectiva para almacenar los resultados de las consultas, lo que previene la sobrecarga en la base de datos por consultas repetitivas.
+
+2. **Gestión de Expiración**: Definir un tiempo de expiración para la caché asegura que los datos no se vuelvan obsoletos, manteniendo la integridad y precisión de la información. (Refresco de la data)
 
 ## 3. Proyecto de clases `Domain` (definiciones e implementaciones de reglas de negocio)
 - Aquí es donde se define la lógica de negocio principal, separada de los detalles de implementación. Esto incluye **interfaces** que definen contratos de comportamiento y reglas de negocio independientes de cómo se implementan.
