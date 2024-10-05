@@ -136,7 +136,7 @@ En nuestro caso, hemos creado una **Stored Function** para devolver los datos de
 
 ### Estructura de la Función
 ```sql
-CREATE OR REPLACE FUNCTION GetUserByCardId(
+CREATE OR REPLACE FUNCTION fnGetUserByCardId(
     p_card_id VARCHAR(12)
 )
 RETURNS TABLE(
@@ -166,7 +166,7 @@ $$ LANGUAGE plpgsql;
 ### Llamada a la Función
 La función se invoca de la siguiente manera:
 ```sql
-SELECT * FROM GetUserByCardId('123');
+SELECT * FROM fnGetUserByCardId('123');
 ```
 ### Explicación de la Función `GetUserByCardId`
 
@@ -174,7 +174,7 @@ En nuestro caso, hemos creado una **Stored Function** para devolver todos los us
 ### Estructura de la Función
 
 ```sql
-    CREATE OR REPLACE FUNCTION GetUsersData()
+    CREATE OR REPLACE FUNCTION fnGetUsersData()
     RETURNS TABLE(
         card_id VARCHAR(12),
         name VARCHAR(100),
@@ -193,7 +193,7 @@ En nuestro caso, hemos creado una **Stored Function** para devolver todos los us
             u.city_id,
             c.name AS city_name
         FROM UserData u
-        JOIN City c ON u.city_id = c.id
+        JOIN City c ON u.city_id = c.id;
     
     END;
     $$ LANGUAGE plpgsql;
@@ -201,7 +201,7 @@ En nuestro caso, hemos creado una **Stored Function** para devolver todos los us
 ### Llamada a la Función
 La función se invoca de la siguiente manera:
 ```sql
-SELECT * FROM GetUsersData();
+SELECT * FROM fnGetUsersData();
 ```
 
 
