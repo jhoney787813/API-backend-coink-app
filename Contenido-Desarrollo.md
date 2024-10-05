@@ -65,6 +65,118 @@ La distribución física de paquetes que mencionas en la construcción de APIs s
 
 Para nuestro caso, un "endpoint" es igual a un "controller" de API, pero por terminología lo denominamos "endpoint", ya que son los puntos de entrada a nuestros recursos. A través de ellos, exponemos y permitimos la interacción sobre el contexto de administración de clientes. Un "endpoint" es la URL específica donde los clientes acceden o manipulan recursos, mientras que el "controller" organiza la lógica que maneja esas solicitudes. El término "endpoint" refleja mejor el acceso público a los recursos, a diferencia del "controller", que es parte de la implementación interna del servidor.
 
+# API Specification: API.Backend.Coink.App
+
+## Información
+
+- **Versión de OpenAPI:** 3.0.1
+- **Título:** API.Backend.Coink.App
+- **Versión:** 1.0
+
+## Rutas
+### Eliminar un Usuario
+#### `DELETE /api/v{version}/user/{identification}`
+- **Tags:** Users
+- **Parámetros:**
+  - `identification` (ruta) - Identificación del usuario a eliminar (requerido).
+  - `version` (ruta) - Versión de la API (requerido).
+- **Respuestas:**
+  - `200 OK` - Usuario eliminado correctamente.
+  - `400 Bad Request` - Solicitud incorrecta.
+  - `401 Unauthorized` - No autorizado.
+  - `406 Not Acceptable` - No aceptable.
+  - `409 Conflict` - Conflicto.
+  - `500 Internal Server Error` - Error interno del servidor.
+
+### Obtener un Usuario por ID
+
+#### `GET /api/v{version}/user/{identification}`
+
+- **Tags:** Users
+- **Parámetros:**
+  - `identification` (ruta) - Identificación del usuario (requerido).
+  - `version` (ruta) - Versión de la API (requerido).
+- **Respuestas:**
+  - `200 OK` - Usuario encontrado.
+  - `400 Bad Request` - Solicitud incorrecta.
+  - `401 Unauthorized` - No autorizado.
+  - `406 Not Acceptable` - No aceptable.
+  - `409 Conflict` - Conflicto.
+  - `500 Internal Server Error` - Error interno del servidor.
+
+### Crear un Usuario
+
+#### `POST /api/v{version}/user`
+
+- **Tags:** Users
+- **Parámetros:**
+  - `version` (ruta) - Versión de la API (requerido).
+- **Cuerpo de la Solicitud:**
+  - **Contenido:**
+    - `application/json` - Comando para crear un usuario.
+    - `text/json` - Comando para crear un usuario.
+    - `application/*+json` - Comando para crear un usuario.
+- **Respuestas:**
+  - `201 Created` - Usuario creado exitosamente.
+  - `400 Bad Request` - Solicitud incorrecta.
+  - `401 Unauthorized` - No autorizado.
+  - `406 Not Acceptable` - No aceptable.
+  - `409 Conflict` - Conflicto.
+  - `500 Internal Server Error` - Error interno del servidor.
+
+## Componentes
+
+### Esquemas
+
+- **CreateUserCommand**
+  - **Propiedades:**
+    - `identification`: string (opcional)
+    - `fullName`: string (opcional)
+    - `phone`: string (opcional)
+    - `address`: string (opcional)
+    - `cityId`: integer (formato: int32)
+
+- **CreateUserCommandResponse**
+  - **Propiedades:**
+    - `identification`: string (opcional)
+    - `fullName`: string (opcional)
+    - `phone`: string (opcional)
+    - `address`: string (opcional)
+    - `cityId`: integer (formato: int32)
+
+- **DeleteUserCommand**
+  - **Propiedades:**
+    - `identification`: string (opcional)
+
+- **GetAllUsersQueryResponse**
+  - **Propiedades:**
+    - `identification`: string (opcional)
+    - `fullName`: string (opcional)
+    - `phone`: string (opcional)
+    - `address`: string (opcional)
+    - `cityId`: integer (formato: int32)
+    - `cityName`: string (opcional)
+
+- **GetUserByIdQueryResponse**
+  - **Propiedades:**
+    - `identification`: string (opcional)
+    - `fullName`: string (opcional)
+    - `phone`: string (opcional)
+    - `address`: string (opcional)
+    - `cityId`: integer (formato: int32)
+    - `cityName`: string (opcional)
+
+- **ProblemDetails**
+  - **Propiedades:**
+    - `type`: string (opcional)
+    - `title`: string (opcional)
+    - `status`: integer (formato: int32, opcional)
+    - `detail`: string (opcional)
+    - `instance`: string (opcional)
+
+
+
+
 ## Algo a destacar
 
 Este diseño asegura que cada módulo sea independiente, fácil de probar y de modificar. El uso de **CQRS** permite que los comandos y consultas se manejen de manera eficiente, lo que mejora la escalabilidad. Además, el enfoque de **Vertical Slice** garantiza que cada funcionalidad sea tratada como una unidad completa, facilitando el mantenimiento y la evolución del sistema. La aplicación de principios **SOLID** favorece un código más limpio, reutilizable y adaptable.
