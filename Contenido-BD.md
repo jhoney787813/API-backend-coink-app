@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/d2a6df9f-5dae-44c1-8eaf-abcf23d0209e)
+
 # Requerimientos a evaluar:
 
 * Construir un esquema de base de datos que permita registrar el nombre, teléfono y dirección de un usuario. 
