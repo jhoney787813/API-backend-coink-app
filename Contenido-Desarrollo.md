@@ -1,3 +1,6 @@
+
+![image](https://github.com/user-attachments/assets/2092369b-eacd-472a-91bc-ab619fdf918a)
+
 # Desarrollo C#
 
 Este proyecto se enfoca en la creación de una API REST utilizando tecnologías como .NET, C# y SQL. El desarrollo sigue el patrón de diseño CQRS junto con MediatR. lo que facilita la implementación de un API con corte vertical. ([Codigo Fuente](https://github.com/jhoney787813/API-backend-coink-app/tree/main/src)) 
