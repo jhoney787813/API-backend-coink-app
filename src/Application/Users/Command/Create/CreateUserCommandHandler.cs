@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using Application.Commons;
 using Domain.Entities;
+using Domain.Interfaces.Repositories;
 using Domain.Interfaces.UseCases;
 using MediatR;
 
@@ -16,14 +17,38 @@ namespace Application.Users.Command.Create
             _createUserUseCase = createUserUseCase;
         }
 
+        //public async Task<Result<CreateUserCommandResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        //{
+        //    StringBuilder errors;
+
+        //    bool isValid = await CityIsValid(request, out errors);
+
+        //    if (ModelIsValid(request, out errors))
+        //    {
+        //        var User = new User(request.Identification, request.FullName, request.Phone, request.Address, request.CityId,request.CityName);
+        //        var result = await _createUserUseCase.Execute(User);
+        //        if (isValid)
+        //        return Result<CreateUserCommandResponse>.Success(MapToResponse(result));
+        //        else 
+        //            return Result<CreateUserCommandResponse>.Failure(errors.ToString());
+        //    }
+
+        //    return Result<CreateUserCommandResponse>.Failure(errors.ToString());
+        //}
+
         public async Task<Result<CreateUserCommandResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            StringBuilder errors;
+            var (isValid, errors) = await CityIsValid(request);  // Uso de Tuple para devolver los dos valores
+
             if (ModelIsValid(request, out errors))
             {
-                var User = new User(request.Identification, request.FullName, request.Phone, request.Address, request.CityId);
-                var result = await _createUserUseCase.Execute(User);
-                return Result<CreateUserCommandResponse>.Success(MapToResponse(result));
+                var user = new User(request.Identification, request.FullName, request.Phone, request.Address, request.CityId, request.CityName);
+                var result = await _createUserUseCase.Execute(user);
+
+                if (isValid)
+                    return Result<CreateUserCommandResponse>.Success(MapToResponse(result));
+                else
+                    return Result<CreateUserCommandResponse>.Failure(errors.ToString());
             }
 
             return Result<CreateUserCommandResponse>.Failure(errors.ToString());
@@ -55,9 +80,24 @@ namespace Application.Users.Command.Create
             return errors.Length == 0;
         }
 
-        private CreateUserCommandResponse MapToResponse(User User)
+
+        private async Task<(bool isValid, StringBuilder errors)> CityIsValid(CreateUserCommand createUserCommand)
         {
-            return new CreateUserCommandResponse(User.Identification, User.FullName, User.Phone, User.Address, User.CityId);
+            var errors = new StringBuilder();
+           bool isExist= await _createUserUseCase.ValidateCountry(createUserCommand.CityName);
+            if (!isExist)
+            {
+                errors.Append("CityName is invalid\n");
+               return (false, errors);
+                
+            }
+
+            return (isExist, errors); 
+        }
+
+        private CreateUserCommandResponse MapToResponse(User user)
+        {
+            return new CreateUserCommandResponse(user.Identification, user.FullName, user.Phone, user.Address, user.CityId, user.CityName);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Application.Users.Command.Create
             public string Phone { get; set; }
             public string Address { get; set; }
             public int CityId { get; set; }
+            public string CityName { get; set; }
 
     }
 }
