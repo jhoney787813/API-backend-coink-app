@@ -17,24 +17,7 @@ namespace Application.Users.Command.Create
             _createUserUseCase = createUserUseCase;
         }
 
-        //public async Task<Result<CreateUserCommandResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
-        //{
-        //    StringBuilder errors;
-
-        //    bool isValid = await CityIsValid(request, out errors);
-
-        //    if (ModelIsValid(request, out errors))
-        //    {
-        //        var User = new User(request.Identification, request.FullName, request.Phone, request.Address, request.CityId,request.CityName);
-        //        var result = await _createUserUseCase.Execute(User);
-        //        if (isValid)
-        //        return Result<CreateUserCommandResponse>.Success(MapToResponse(result));
-        //        else 
-        //            return Result<CreateUserCommandResponse>.Failure(errors.ToString());
-        //    }
-
-        //    return Result<CreateUserCommandResponse>.Failure(errors.ToString());
-        //}
+   
 
         public async Task<Result<CreateUserCommandResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
