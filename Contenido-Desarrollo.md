@@ -134,6 +134,17 @@ La utilización de `IMemoryCache` mejora significativamente el rendimiento al ev
 
 2. **Gestión de Expiración**: Definir un tiempo de expiración para la caché asegura que los datos no se vuelvan obsoletos, manteniendo la integridad y precisión de la información. (Refresco de la data)
 
+**Actualización:** Se implementa el repositorio de  CityRepository el cual obtiene de la base de datos los paises y los almacena en cache, adicional a esto se modifica en el handler para validar que el nombre del pais sea valido antes de insertalo en la bd.
+
+<img width="458" alt="image" src="https://github.com/user-attachments/assets/7a5e8418-202a-4a40-a279-3f3e9b84ff0a">
+
+Clase **CreateUserCommandHandler**
+
+<img width="708" alt="image" src="https://github.com/user-attachments/assets/c051a978-511f-41a7-9790-3529760134b2">
+
+<img width="458" alt="image" src="https://github.com/user-attachments/assets/be6e2abe-774f-4418-8004-b2a7c4f69c21">
+
+
 ## 3. Proyecto de clases `Domain` (definiciones e implementaciones de reglas de negocio)
 - Aquí es donde se define la lógica de negocio principal, separada de los detalles de implementación. Esto incluye **interfaces** que definen contratos de comportamiento y reglas de negocio independientes de cómo se implementan.
 - **Vertical Slice** es clave aquí, ya que segmenta la lógica por funcionalidad (cada "slice" es una característica completa) para nuestro caso se segmenta por "casos de uso" ys que nuestro desarrollo se orienta al dominio del negocio, lo que facilita que cada parte de la aplicación crezca de manera autónoma, permitiendo iteraciones ágiles y un código más fácil de mantener.
